@@ -1,4 +1,5 @@
-﻿using OrderAgregator.Model.Model;
+﻿using OrderAgregator.Channels.Interfaces;
+using OrderAgregator.Model.Model;
 using OrderAgregator.Services.Interfaces;
 using Serilog;
 using System.Collections.Generic;
@@ -9,19 +10,28 @@ namespace OrderAgregator.Services
 {
     public class OrderService : IOrderService
     {
+        private readonly IOrdersProducer _orderProducer;
+
+        public OrderService(IOrdersProducer orderProducer)
+        {
+            _orderProducer = orderProducer;
+        }
+
         public async Task<IEnumerable<Order>> UploadOrders(Order[] orders)
         {
-            foreach (Order order in orders)
-            {
-                Log.Information(OrderToString(order));
-            }
+            LogOrders(orders);
+
+            await _orderProducer.SendOrdersMessageAsync(new OrdersMessage {Orders = orders});
 
             return orders.ToList();
         }
 
-        private static string OrderToString(Order order)
+        private static void LogOrders(Order[] orders)
         {
-            return $"Order: product id: {order.ProductId}, quantity: {order.Quantity}.";
+            foreach (Order order in orders)
+            {
+                Log.Information($"Order: product id: {order.ProductId}, quantity: {order.Quantity}.");
+            }
         }
     }
 }
