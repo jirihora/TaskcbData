@@ -4,6 +4,9 @@ namespace OrderAgregator.Model.Model
 {
     public class Order
     {
+        [JsonIgnore]
+        public int Id { get; set; }
+
         [JsonPropertyName("productId")]
         public string ProductId { get; set; }
 

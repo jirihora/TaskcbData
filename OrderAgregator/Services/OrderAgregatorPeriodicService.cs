@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using OrderAgregator.Channels.Interfaces;
 using OrderAgregator.Helpers;
 using OrderAgregator.Model.Model;
+using OrderAgregator.Repositories.Interfaces;
+using OrderAgregator.Settings;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -13,13 +16,16 @@ namespace OrderAgregator.Services
 {
     internal class OrderAgregatorPeriodicService : BackgroundService
     {
-        private readonly TimeSpan _period = TimeSpan.FromSeconds(20);
+        private readonly OrderAgregatorPeriodicServiceSettings _orderAgregatorPeriodicServiceSettings;
         private readonly IOrdersChannel _ordersChannel;
-        private List<Order> _orders = [];
+        private readonly IServiceProvider _serviceProvider;
+        private readonly List<Order> _orders = [];
 
-        public OrderAgregatorPeriodicService(IOrdersChannel ordersChannel)
+        public OrderAgregatorPeriodicService(OrderAgregatorPeriodicServiceSettings orderAgregatorPeriodicServiceSettings, IOrdersChannel ordersChannel, IServiceProvider serviceProvider)
         {
+            _orderAgregatorPeriodicServiceSettings = orderAgregatorPeriodicServiceSettings;
             _ordersChannel = ordersChannel;
+            _serviceProvider = serviceProvider;
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
@@ -57,16 +63,16 @@ namespace OrderAgregator.Services
 
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            await ProcessOrders(cancellationToken);
+            await ProcessOrdersWithTimer(cancellationToken);
         }
 
-        private async Task ProcessOrders(CancellationToken cancellationToken)
+        private async Task ProcessOrdersWithTimer(CancellationToken cancellationToken)
         {
             Log.Debug("{DateTime} from {ServiceName}.", DateTime.Now.ToLongTimeString(), nameof(OrderAgregatorPeriodicService));
 
             try
             {
-                using PeriodicTimer timer = new PeriodicTimer(_period);
+                using PeriodicTimer timer = new(TimeSpan.FromSeconds(_orderAgregatorPeriodicServiceSettings.OrderAgregationInterval));
                 //wait for timer tick
                 while (!cancellationToken.IsCancellationRequested && await timer.WaitForNextTickAsync(cancellationToken))
                 {
@@ -78,7 +84,14 @@ namespace OrderAgregator.Services
 
                     // agregate orders
                     var agregatedOrders = OrderAgregationHelper.AggregateOrders(_orders);
-                    LogOrders(OrderAgregationHelper.TransformToList(agregatedOrders));
+
+                    using var scope = _serviceProvider.CreateScope();
+                    var orderRepository = scope.ServiceProvider.GetRequiredService<IOrderRepository>();
+
+                    var savedOrdersCount = await orderRepository.SaveOrdersAsync(OrderAgregationHelper.TransformToList(agregatedOrders));
+
+                    Log.Information("{SavedOrdersCount} orders saved.", savedOrdersCount.ToString());
+                    //LogOrders(OrderAgregationHelper.TransformToList(agregatedOrders));
 
                     // clear temp orders
                     _orders.Clear();
@@ -86,7 +99,7 @@ namespace OrderAgregator.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Error in {ServiceName}", nameof(OrderAgregatorPeriodicService));
+                Log.Error(ex, "Error in {ServiceName}.", nameof(OrderAgregatorPeriodicService));
 
                 throw;
             }
