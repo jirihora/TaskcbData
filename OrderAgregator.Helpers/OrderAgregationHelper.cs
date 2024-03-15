@@ -1,6 +1,4 @@
 ﻿using OrderAgregator.Model.Model;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace OrderAgregator.Helpers
 {
@@ -27,8 +25,9 @@ namespace OrderAgregator.Helpers
 
         public static List<Order> TransformToList(Dictionary<string, int> agregatedOrders)
         {
-            return agregatedOrders.Select(kvp => new Order { ProductId = kvp.Key, Quantity = kvp.Value })
-                      .ToList();
+            return agregatedOrders
+                    .Select(x => new Order { ProductId = x.Key, Quantity = x.Value })
+                    .ToList();
         }
     }
 }

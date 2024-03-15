@@ -30,6 +30,7 @@ namespace OrderAgregatorAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHealthChecks();
 
             builder.Services.AddSingleton(GetOrderAgregatorPeriodicServiceSettings(builder));
 
@@ -45,6 +46,8 @@ namespace OrderAgregatorAPI
             builder.Services.AddHostedService<OrderAgregatorPeriodicService>();
             builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -55,10 +58,9 @@ namespace OrderAgregatorAPI
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
             app.MapControllers();
+            app.MapHealthChecks("/api/health");
 
             app.Run();
         }
