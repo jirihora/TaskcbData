@@ -26,3 +26,9 @@ Navrhnìte webovou službu, která:
 - Zkuste navrhnout další možná vylepšení a pøímo je implementujte nebo jen naznaète / popište.
 - Mìjte kód takový, jako si pøedstavuje v produkèní aplikaci.
 - Kód odevzdejte nejlépe formou publikace na GitHub - možno i jako privátní repozitáø.
+
+---
+
+### návrhy na vylepšení:
+- Použit nìjaký messaging system (Kafka, RabbitMQ) namísto InMemoryChannels.
+- Pøidat autentizaci (napø. pomocí JWT).
