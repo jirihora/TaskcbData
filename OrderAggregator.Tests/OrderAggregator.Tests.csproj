@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OrderAgregator.Database\OrderAggregator.Database.csproj" />
-    <ProjectReference Include="..\OrderAgregator\OrderAggregator.csproj" />
+    <ProjectReference Include="..\OrderAggregator.Database\OrderAggregator.Database.csproj" />
+    <ProjectReference Include="..\OrderAggregator\OrderAggregator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
