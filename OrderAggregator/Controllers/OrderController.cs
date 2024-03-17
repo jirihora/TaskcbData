@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OrderAggregator.Model.Model;
+using OrderAggregator.Model.Models;
+using OrderAggregator.Model.Validations;
 using OrderAggregator.Services.Interfaces;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace OrderAggregator.Controllers
@@ -21,9 +21,22 @@ namespace OrderAggregator.Controllers
         }
 
         [HttpPost]
-        public async Task<IEnumerable<Order>> UploadOrders([FromBody] Order[] orders)
+        public async Task<IActionResult> UploadOrders([FromBody] Order[] orders)
         {
-            return await _orderAggregatorService.UploadOrders(orders);
+            foreach (var order in orders)
+            {
+                var validator = new OrderValidator();
+                var validationResult = await validator.ValidateAsync(order);
+
+                if (!validationResult.IsValid)
+                {
+                    return ValidationProblem($"Order with product id '{order.ProductId}' and quantity '{order.Quantity}' is not valid. Validation result: {validationResult}");
+                }
+            }
+
+            await _orderAggregatorService.UploadOrders(orders);
+
+            return Accepted();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace OrderAggregator.Model.Model
+namespace OrderAggregator.Model.Models
 {
     public class OrdersMessage
     {

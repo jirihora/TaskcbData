@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using OrderAggregator.Database;
-using OrderAggregator.Model.Model;
+using OrderAggregator.Model.Models;
 using OrderAggregator.Repositories;
 using System;
 using System.Collections.Generic;

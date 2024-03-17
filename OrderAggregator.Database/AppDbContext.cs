@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OrderAggregator.Model.Model;
+using OrderAggregator.Model.Models;
 
 namespace OrderAggregator.Database
 {

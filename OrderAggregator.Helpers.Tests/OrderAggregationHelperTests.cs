@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using OrderAggregator.Model.Model;
+using OrderAggregator.Model.Models;
 using System.Collections.Generic;
 
 namespace OrderAggregator.Helpers.Tests

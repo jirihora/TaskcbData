@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using OrderAggregator.Channels.Interfaces;
 using OrderAggregator.Helpers;
-using OrderAggregator.Model.Model;
+using OrderAggregator.Model.Models;
 using OrderAggregator.Repositories.Interfaces;
 using OrderAggregator.Settings;
 using Serilog;

@@ -1,5 +1,5 @@
 ﻿using OrderAggregator.Channels.Interfaces;
-using OrderAggregator.Model.Model;
+using OrderAggregator.Model.Models;
 using OrderAggregator.Services.Interfaces;
 using Serilog;
 using System.Collections.Generic;

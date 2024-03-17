@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace OrderAggregator.Model.Model
+namespace OrderAggregator.Model.Models
 {
     public class Order
     {

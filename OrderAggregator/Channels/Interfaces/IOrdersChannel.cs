@@ -1,4 +1,4 @@
-﻿using OrderAggregator.Model.Model;
+﻿using OrderAggregator.Model.Models;
 using System.Threading.Channels;
 
 namespace OrderAggregator.Channels.Interfaces

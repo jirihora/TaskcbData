@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OrderAggregator.Model.Model;
+using OrderAggregator.Model.Models;
 using OrderAggregator.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
