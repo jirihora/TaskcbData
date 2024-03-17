@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrderAggregator.Model\OrderAggregator.Model.csproj" />
+    <ProjectReference Include="..\OrderAggregator.Model\OrderAggregator.Model.csproj" />
+  </ItemGroup>
+
+</Project>
