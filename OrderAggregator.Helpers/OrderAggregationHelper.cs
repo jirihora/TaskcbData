@@ -16,21 +16,21 @@ namespace OrderAggregator.Helpers
         /// <returns>Dictionary where key is product id and value is quantity.</returns>
         public static Dictionary<string, int> AggregateOrders(IEnumerable<Order> orders)
         {
-            Dictionary<string, int> agregatedOrders = [];
+            Dictionary<string, int> aggregatedOrders = [];
 
             foreach (var order in orders)
             {
-                if (agregatedOrders.ContainsKey(order.ProductId))
+                if (aggregatedOrders.ContainsKey(order.ProductId))
                 {
-                    agregatedOrders[order.ProductId] += order.Quantity;
+                    aggregatedOrders[order.ProductId] += order.Quantity;
                 }
                 else
                 {
-                    agregatedOrders.Add(order.ProductId, order.Quantity);
+                    aggregatedOrders.Add(order.ProductId, order.Quantity);
                 }
             }
 
-            return agregatedOrders;
+            return aggregatedOrders;
         }
 
         /// <summary>

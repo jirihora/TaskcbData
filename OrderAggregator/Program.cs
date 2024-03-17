@@ -25,7 +25,7 @@ namespace OrderAggregator
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Host.UseSerilog(SeriLogger.Configure);
+            builder.Host.UseSerilog(SeriLoggerExtensions.Configure);
 
             // Add services to the container.
 

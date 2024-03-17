@@ -4,8 +4,11 @@ using System;
 
 namespace Common.Logging
 {
-    public static class SeriLogger
+    public static class SeriLoggerExtensions
     {
+        /// <summary>
+        /// Extension to configure Serilog.
+        /// </summary>
         public static Action<HostBuilderContext, LoggerConfiguration> Configure =>
            (context, configuration) =>
            {

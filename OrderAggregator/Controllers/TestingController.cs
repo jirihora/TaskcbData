@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿#if DEBUG
+
+using Microsoft.AspNetCore.Mvc;
 using OrderAggregator.Model.Models;
 using OrderAggregator.Repositories.Interfaces;
 using System.Collections.Generic;
@@ -27,3 +29,5 @@ namespace OrderAggregator.Controllers
         }
     }
 }
+
+#endif

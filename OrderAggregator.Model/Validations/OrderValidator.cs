@@ -3,6 +3,9 @@ using OrderAggregator.Model.Models;
 
 namespace OrderAggregator.Model.Validations
 {
+    /// <summary>
+    /// Validator for <see cref="Order"/> class.
+    /// </summary>
     public class OrderValidator : AbstractValidator<Order>
     {
         public OrderValidator()
