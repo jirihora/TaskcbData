@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OrderAgregator.Channels.Interfaces;
-using OrderAgregator.Helpers;
-using OrderAgregator.Model.Model;
-using OrderAgregator.Repositories.Interfaces;
-using OrderAgregator.Settings;
+using OrderAggregator.Channels.Interfaces;
+using OrderAggregator.Helpers;
+using OrderAggregator.Model.Model;
+using OrderAggregator.Repositories.Interfaces;
+using OrderAggregator.Settings;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -12,18 +12,21 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OrderAgregator.Services
+namespace OrderAggregator.Services
 {
-    internal class OrderAgregatorPeriodicService : BackgroundService
+    /// <summary>
+    /// Process received orders in set interval.
+    /// </summary>
+    internal class OrderAggregatorPeriodicService : BackgroundService
     {
-        private readonly OrderAgregatorPeriodicServiceSettings _orderAgregatorPeriodicServiceSettings;
+        private readonly OrderAggregatorPeriodicServiceSettings _orderAggregatorPeriodicServiceSettings;
         private readonly IOrdersChannel _ordersChannel;
         private readonly IServiceProvider _serviceProvider;
         private readonly List<Order> _orders = [];
 
-        public OrderAgregatorPeriodicService(OrderAgregatorPeriodicServiceSettings orderAgregatorPeriodicServiceSettings, IOrdersChannel ordersChannel, IServiceProvider serviceProvider)
+        public OrderAggregatorPeriodicService(OrderAggregatorPeriodicServiceSettings orderAggregatorPeriodicServiceSettings, IOrdersChannel ordersChannel, IServiceProvider serviceProvider)
         {
-            _orderAgregatorPeriodicServiceSettings = orderAgregatorPeriodicServiceSettings;
+            _orderAggregatorPeriodicServiceSettings = orderAggregatorPeriodicServiceSettings;
             _ordersChannel = ordersChannel;
             _serviceProvider = serviceProvider;
         }
@@ -37,13 +40,13 @@ namespace OrderAgregator.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Error while starting {ServiceName}", nameof(OrderAgregatorPeriodicService));
+                Log.Error(ex, "Error while starting {ServiceName}", nameof(OrderAggregatorPeriodicService));
             }
         }
 
         protected Task OnStartedAsync(CancellationToken cancellationToken)
         {
-            Log.Information("{ServiceName} successfully started.", nameof(OrderAgregatorPeriodicService));
+            Log.Information("{ServiceName} successfully started.", nameof(OrderAggregatorPeriodicService));
 
             return Task.CompletedTask;
         }
@@ -56,7 +59,7 @@ namespace OrderAgregator.Services
 
         protected virtual Task OnStoppedAsync(CancellationToken cancellationToken)
         {
-            Log.Information("{ServiceName} successfully stopped.", nameof(OrderAgregatorPeriodicService));
+            Log.Information("{ServiceName} successfully stopped.", nameof(OrderAggregatorPeriodicService));
 
             return Task.CompletedTask;
         }
@@ -68,11 +71,11 @@ namespace OrderAgregator.Services
 
         private async Task ProcessOrdersWithTimer(CancellationToken cancellationToken)
         {
-            Log.Debug("{DateTime} from {ServiceName}.", DateTime.Now.ToLongTimeString(), nameof(OrderAgregatorPeriodicService));
+            Log.Debug("{DateTime} from {ServiceName}.", DateTime.Now.ToLongTimeString(), nameof(OrderAggregatorPeriodicService));
 
             try
             {
-                using PeriodicTimer timer = new(TimeSpan.FromSeconds(_orderAgregatorPeriodicServiceSettings.OrderAgregationInterval));
+                using PeriodicTimer timer = new(TimeSpan.FromSeconds(_orderAggregatorPeriodicServiceSettings.OrderAggregationInterval));
                 //wait for timer tick
                 while (!cancellationToken.IsCancellationRequested && await timer.WaitForNextTickAsync(cancellationToken))
                 {
@@ -82,16 +85,15 @@ namespace OrderAgregator.Services
                         _orders.AddRange(ordersMessage.Orders);
                     }
 
-                    // agregate orders
-                    var agregatedOrders = OrderAgregationHelper.AggregateOrders(_orders);
+                    // aggregate orders
+                    var aggregatedOrders = OrderAggregationHelper.AggregateOrders(_orders);
 
                     using var scope = _serviceProvider.CreateScope();
                     var orderRepository = scope.ServiceProvider.GetRequiredService<IOrderRepository>();
 
-                    var savedOrdersCount = await orderRepository.SaveOrdersAsync(OrderAgregationHelper.TransformToList(agregatedOrders));
+                    var savedOrdersCount = await orderRepository.SaveOrdersAsync(OrderAggregationHelper.TransformToList(aggregatedOrders));
 
                     Log.Information("{SavedOrdersCount} orders saved.", savedOrdersCount.ToString());
-                    //LogOrders(OrderAgregationHelper.TransformToList(agregatedOrders));
 
                     // clear temp orders
                     _orders.Clear();
@@ -99,7 +101,7 @@ namespace OrderAgregator.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "Error in {ServiceName}.", nameof(OrderAgregatorPeriodicService));
+                Log.Error(ex, "Error in {ServiceName}.", nameof(OrderAggregatorPeriodicService));
 
                 throw;
             }
@@ -111,7 +113,7 @@ namespace OrderAgregator.Services
 
             foreach (Order order in orders)
             {
-                Log.Information($"{nameof(OrderAgregatorPeriodicService)}: Order: product id: {order.ProductId}, quantity: {order.Quantity}.");
+                Log.Information($"{nameof(OrderAggregatorPeriodicService)}: Order: product id: {order.ProductId}, quantity: {order.Quantity}.");
             }
         }
     }

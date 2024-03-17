@@ -1,12 +1,15 @@
-﻿using OrderAgregator.Channels.Interfaces;
-using OrderAgregator.Model.Model;
+﻿using OrderAggregator.Channels.Interfaces;
+using OrderAggregator.Model.Model;
 using Serilog;
 using System;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace OrderAgregator.Channels
+namespace OrderAggregator.Channels
 {
+    /// <summary>
+    /// Bundles methods that are used to produce <see cref="OrdersMessage"/> using <see cref="IOrdersChannel"/>
+    /// </summary>
     public class OrdersProducer : IOrdersProducer
     {
         private readonly ChannelWriter<OrdersMessage> _channelWriter;

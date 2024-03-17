@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderAgregator", "OrderAgregator\OrderAgregator.csproj", "{9361B46C-B0B6-49A3-BBDA-C4112AD618EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderAggregator", "OrderAgregator\OrderAggregator.csproj", "{9361B46C-B0B6-49A3-BBDA-C4112AD618EB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderAgregator.Model", "OrderAgregator.Model\OrderAgregator.Model.csproj", "{D79EEFAA-C086-4D64-90C2-633AF59C66AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderAggregator.Model", "OrderAgregator.Model\OrderAggregator.Model.csproj", "{D79EEFAA-C086-4D64-90C2-633AF59C66AA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Logging", "Common.Logging\Common.Logging.csproj", "{59CDDAE6-B600-4A72-9E06-1B913EE12989}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderAgregator.Database", "OrderAgregator.Database\OrderAgregator.Database.csproj", "{C83CBC27-1825-4CF1-914D-809D4DE4D7E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderAggregator.Database", "OrderAgregator.Database\OrderAggregator.Database.csproj", "{C83CBC27-1825-4CF1-914D-809D4DE4D7E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderAgregator.Helpers", "OrderAgregator.Helpers\OrderAgregator.Helpers.csproj", "{8644CFE4-55EC-4C8D-B6BA-B2815BD1E498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderAggregator.Helpers", "OrderAgregator.Helpers\OrderAggregator.Helpers.csproj", "{8644CFE4-55EC-4C8D-B6BA-B2815BD1E498}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderAgregator.Helpers.Tests", "OrderAgregator.Helpers.Tests\OrderAgregator.Helpers.Tests.csproj", "{7A90A6CF-51DC-45D9-85D1-A0F70C2A8866}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderAggregator.Helpers.Tests", "OrderAgregator.Helpers.Tests\OrderAggregator.Helpers.Tests.csproj", "{7A90A6CF-51DC-45D9-85D1-A0F70C2A8866}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderAgregator.Tests", "OrderAgregator.Tests\OrderAgregator.Tests.csproj", "{3651FD1A-5BB0-4F70-92FC-AEC0C1BD2D7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderAggregator.Tests", "OrderAgregator.Tests\OrderAggregator.Tests.csproj", "{3651FD1A-5BB0-4F70-92FC-AEC0C1BD2D7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

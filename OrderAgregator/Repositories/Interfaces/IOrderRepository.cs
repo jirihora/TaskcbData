@@ -1,16 +1,16 @@
-﻿using OrderAgregator.Model.Model;
+﻿using OrderAggregator.Model.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OrderAgregator.Repositories.Interfaces
+namespace OrderAggregator.Repositories.Interfaces
 {
     /// <summary>
-    /// Repository for working with orders.
+    /// Bundles all the methods that are used to process orders.
     /// </summary>
     public interface IOrderRepository
     {
         /// <summary>
-        /// Methods to save orders.
+        /// Method to save orders.
         /// </summary>
         /// <param name="orders">Collection of orders to be saved.</param>
         /// <returns>Count of saved orders.</returns>

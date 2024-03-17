@@ -1,26 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OrderAgregator.Model.Model;
-using OrderAgregator.Services.Interfaces;
+using OrderAggregator.Model.Model;
+using OrderAggregator.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OrderAgregatorAPI.Controllers
+namespace OrderAggregator.Controllers
 {
+    /// <summary>
+    /// Controller for working with orders.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class OrderController : ControllerBase
     {
-        private readonly IOrderService _orderAgregatorService;
+        private readonly IOrderService _orderAggregatorService;
 
-        public OrderController(IOrderService orderAgregatorService)
+        public OrderController(IOrderService orderAggregatorService)
         {
-            _orderAgregatorService = orderAgregatorService;
+            _orderAggregatorService = orderAggregatorService;
         }
 
         [HttpPost]
         public async Task<IEnumerable<Order>> UploadOrders([FromBody] Order[] orders)
         {
-            return await _orderAgregatorService.UploadOrders(orders);
+            return await _orderAggregatorService.UploadOrders(orders);
         }
     }
 }

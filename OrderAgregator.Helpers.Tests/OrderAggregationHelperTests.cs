@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
-using OrderAgregator.Helpers;
-using OrderAgregator.Model.Model;
+using OrderAggregator.Model.Model;
+using System.Collections.Generic;
 
-namespace OrderAgregation.Helpers.Tests
+namespace OrderAggregator.Helpers.Tests
 {
     [TestClass]
-    public class OrderAgregationHelperTests
+    public class OrderAggregationHelperTests
     {
         [TestMethod]
-        public void AgregateOrders_ReturnsAgregatedOrdersWithRightQuantities()
+        public void AggregateOrders_ReturnsAggregatedOrdersWithRightQuantities()
         {
             var order = new List<Order>
             {
@@ -23,26 +23,26 @@ namespace OrderAgregation.Helpers.Tests
                 new() { ProductId = "100", Quantity = 100 }
             };
 
-            Dictionary<string, int> agregatedOrders = OrderAgregationHelper.AggregateOrders(order);
+            Dictionary<string, int> aggregatedOrders = OrderAggregationHelper.AggregateOrders(order);
 
-            agregatedOrders.Should().NotBeNullOrEmpty();
-            agregatedOrders.Should().HaveCount(3);
-            agregatedOrders.Should().Contain(x => x.Key == "1" && x.Value == 3);
-            agregatedOrders.Should().Contain(x => x.Key == "10" && x.Value == 30);
-            agregatedOrders.Should().Contain(x => x.Key == "100" && x.Value == 300);
+            aggregatedOrders.Should().NotBeNullOrEmpty();
+            aggregatedOrders.Should().HaveCount(3);
+            aggregatedOrders.Should().Contain(x => x.Key == "1" && x.Value == 3);
+            aggregatedOrders.Should().Contain(x => x.Key == "10" && x.Value == 30);
+            aggregatedOrders.Should().Contain(x => x.Key == "100" && x.Value == 300);
         }
 
         [TestMethod]
         public void TransformToList()
         {
-            var agregatedOrders = new Dictionary<string, int>()
+            var aggregatedOrders = new Dictionary<string, int>()
             {
                     { "1", 3 },
                     { "10", 30 },
                     { "100", 300 }
             };
 
-            var orders = OrderAgregationHelper.TransformToList(agregatedOrders);
+            var orders = OrderAggregationHelper.TransformToList(aggregatedOrders);
 
             orders.Should().NotBeNullOrEmpty();
             orders.Should().HaveCount(3);

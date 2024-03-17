@@ -4,20 +4,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OrderAgregator.Channels;
-using OrderAgregator.Channels.Interfaces;
-using OrderAgregator.Database;
-using OrderAgregator.Repositories;
-using OrderAgregator.Repositories.Interfaces;
-using OrderAgregator.Services;
-using OrderAgregator.Services.Interfaces;
-using OrderAgregator.Settings;
+using OrderAggregator.Channels;
+using OrderAggregator.Channels.Interfaces;
+using OrderAggregator.Database;
+using OrderAggregator.Repositories;
+using OrderAggregator.Repositories.Interfaces;
+using OrderAggregator.Services;
+using OrderAggregator.Services.Interfaces;
+using OrderAggregator.Settings;
 using Serilog;
+using System;
 
-namespace OrderAgregatorAPI
+namespace OrderAggregator
 {
     public class Program
     {
+        private const string OrderAggregatorInMemoryDB = nameof(OrderAggregatorInMemoryDB);
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -32,10 +35,10 @@ namespace OrderAgregatorAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddHealthChecks();
 
-            builder.Services.AddSingleton(GetOrderAgregatorPeriodicServiceSettings(builder));
+            builder.Services.AddSingleton(GetOrderAggregatorPeriodicServiceSettings(builder));
 
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("OrderAgregatorInMemoryDB"))
+                options.UseInMemoryDatabase(GetOrderAggregatorInMemoryDBConnectionString(builder))
             );
 
             builder.Services.AddTransient<IOrderService, OrderService>();
@@ -43,7 +46,7 @@ namespace OrderAgregatorAPI
             builder.Services.AddSingleton<IOrdersChannel, OrdersChannel>();
             builder.Services.AddTransient<OrdersProducer>();
             builder.Services.AddTransient<IOrdersProducer>(x => x.GetRequiredService<OrdersProducer>());
-            builder.Services.AddHostedService<OrderAgregatorPeriodicService>();
+            builder.Services.AddHostedService<OrderAggregatorPeriodicService>();
             builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 
 
@@ -65,13 +68,30 @@ namespace OrderAgregatorAPI
             app.Run();
         }
 
-        private static OrderAgregatorPeriodicServiceSettings GetOrderAgregatorPeriodicServiceSettings(WebApplicationBuilder builder)
+        private static string GetOrderAggregatorInMemoryDBConnectionString(WebApplicationBuilder builder)
         {
-            OrderAgregatorPeriodicServiceSettings orderAgregatorPeriodicServiceSettings = new();
+            var connectionString = builder.Configuration.GetConnectionString(OrderAggregatorInMemoryDB);
 
-            builder.Configuration.GetSection(nameof(OrderAgregatorPeriodicServiceSettings)).Bind(orderAgregatorPeriodicServiceSettings);
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new ArgumentException($"Cannot get connection string for {OrderAggregatorInMemoryDB}.");
+            }
 
-            return orderAgregatorPeriodicServiceSettings;
+            return connectionString;
+        }
+
+        private static OrderAggregatorPeriodicServiceSettings GetOrderAggregatorPeriodicServiceSettings(WebApplicationBuilder builder)
+        {
+            OrderAggregatorPeriodicServiceSettings orderAggregatorPeriodicServiceSettings = new();
+
+            builder.Configuration.GetSection(nameof(OrderAggregatorPeriodicServiceSettings)).Bind(orderAggregatorPeriodicServiceSettings);
+
+            if (orderAggregatorPeriodicServiceSettings.IsDefault())
+            {
+                throw new ArgumentException($"{nameof(OrderAggregatorPeriodicServiceSettings)} is set to default. The application won't start.");
+            }
+
+            return orderAggregatorPeriodicServiceSettings;
         }
     }
 }

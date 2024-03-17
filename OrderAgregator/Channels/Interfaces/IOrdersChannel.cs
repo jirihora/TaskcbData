@@ -1,8 +1,11 @@
-﻿using OrderAgregator.Model.Model;
+﻿using OrderAggregator.Model.Model;
 using System.Threading.Channels;
 
-namespace OrderAgregator.Channels.Interfaces
+namespace OrderAggregator.Channels.Interfaces
 {
+    /// <summary>
+    /// Aggregates channel and reader for <see cref="OrdersMessage"/>.
+    /// </summary>
     public interface IOrdersChannel
     {
         public Channel<OrdersMessage> Channel { get; }

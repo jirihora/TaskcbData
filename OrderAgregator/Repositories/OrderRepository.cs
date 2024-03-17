@@ -1,12 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OrderAgregator.Database;
-using OrderAgregator.Model.Model;
-using OrderAgregator.Repositories.Interfaces;
+using OrderAggregator.Database;
+using OrderAggregator.Model.Model;
+using OrderAggregator.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OrderAgregator.Repositories
+namespace OrderAggregator.Repositories
 {
+    /// <summary>
+    /// Implementation of <see cref="IOrderRepository"/> using in memory DB.
+    /// </summary>
     public class OrderRepository : IOrderRepository
     {
         private readonly AppDbContext _appDbContext;

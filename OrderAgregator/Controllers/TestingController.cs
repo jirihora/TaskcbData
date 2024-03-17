@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OrderAgregator.Model.Model;
-using OrderAgregator.Repositories.Interfaces;
+using OrderAggregator.Model.Model;
+using OrderAggregator.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OrderAgregator.Controllers
+namespace OrderAggregator.Controllers
 {
+    /// <summary>
+    /// Controller for testing purposes.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class TestingController : ControllerBase

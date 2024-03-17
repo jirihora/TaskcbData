@@ -1,8 +1,11 @@
-﻿using OrderAgregator.Model.Model;
+﻿using OrderAggregator.Model.Model;
 using System.Threading.Tasks;
 
-namespace OrderAgregator.Channels.Interfaces
+namespace OrderAggregator.Channels.Interfaces
 {
+    /// <summary>
+    /// Bundles methods that are used to produce <see cref="OrdersMessage"/>.
+    /// </summary>
     public interface IOrdersProducer
     {
         public Task SendOrdersMessageAsync(OrdersMessage ordersMessage);

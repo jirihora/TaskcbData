@@ -1,10 +1,12 @@
 ﻿using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using OrderAgregator.Database;
-using OrderAgregator.Model.Model;
-using OrderAgregator.Repositories;
+using OrderAggregator.Database;
+using OrderAggregator.Model.Model;
+using OrderAggregator.Repositories;
+using System;
+using System.Collections.Generic;
 
-namespace OrderAgregator.Tests
+namespace OrderAggregator.Tests
 {
     [TestClass]
     public class OrderRepositoryTests

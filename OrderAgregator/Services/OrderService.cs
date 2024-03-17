@@ -1,13 +1,16 @@
-﻿using OrderAgregator.Channels.Interfaces;
-using OrderAgregator.Model.Model;
-using OrderAgregator.Services.Interfaces;
+﻿using OrderAggregator.Channels.Interfaces;
+using OrderAggregator.Model.Model;
+using OrderAggregator.Services.Interfaces;
 using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OrderAgregator.Services
+namespace OrderAggregator.Services
 {
+    /// <summary>
+    /// Provides methods to work with orders using <see cref="IOrdersProducer"/>.
+    /// </summary>
     public class OrderService : IOrderService
     {
         private readonly IOrdersProducer _orderProducer;
@@ -21,7 +24,7 @@ namespace OrderAgregator.Services
         {
             LogOrders(orders);
 
-            await _orderProducer.SendOrdersMessageAsync(new OrdersMessage {Orders = orders});
+            await _orderProducer.SendOrdersMessageAsync(new OrdersMessage { Orders = orders });
 
             return orders.ToList();
         }

@@ -12,9 +12,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common.Logging\Common.Logging.csproj" />
-    <ProjectReference Include="..\OrderAgregator.Database\OrderAgregator.Database.csproj" />
-    <ProjectReference Include="..\OrderAgregator.Helpers\OrderAgregator.Helpers.csproj" />
-    <ProjectReference Include="..\OrderAgregator.Model\OrderAgregator.Model.csproj" />
+    <ProjectReference Include="..\OrderAgregator.Database\OrderAggregator.Database.csproj" />
+    <ProjectReference Include="..\OrderAgregator.Helpers\OrderAggregator.Helpers.csproj" />
+    <ProjectReference Include="..\OrderAgregator.Model\OrderAggregator.Model.csproj" />
   </ItemGroup>
 
 </Project>
