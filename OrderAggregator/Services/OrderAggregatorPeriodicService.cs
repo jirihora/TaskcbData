@@ -106,15 +106,5 @@ namespace OrderAggregator.Services
                 throw;
             }
         }
-
-        private static void LogOrders(IEnumerable<Order> orders)
-        {
-            Log.Information("{Count} orders:", orders.Count());
-
-            foreach (Order order in orders)
-            {
-                Log.Information($"{nameof(OrderAggregatorPeriodicService)}: Order: product id: {order.ProductId}, quantity: {order.Quantity}.");
-            }
-        }
     }
 }

@@ -43,13 +43,9 @@ namespace OrderAggregator
 
             builder.Services.AddTransient<IOrderService, OrderService>();
             builder.Services.AddSingleton<IOrdersChannel, OrdersChannel>();
-            builder.Services.AddSingleton<IOrdersChannel, OrdersChannel>();
-            builder.Services.AddTransient<OrdersProducer>();
-            builder.Services.AddTransient<IOrdersProducer>(x => x.GetRequiredService<OrdersProducer>());
+            builder.Services.AddTransient<IOrdersProducer, OrdersProducer>();
             builder.Services.AddHostedService<OrderAggregatorPeriodicService>();
             builder.Services.AddTransient<IOrderRepository, OrderRepository>();
-
-
 
             var app = builder.Build();
 
